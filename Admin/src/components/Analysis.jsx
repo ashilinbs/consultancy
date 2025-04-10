@@ -65,6 +65,7 @@ const Analysis = () => {
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">Sales Distribution</h3>
                 <Pie data={pieChartData} />
             </div>
+            <h1>sdwdsd</h1>
         </div>
     );
 };
