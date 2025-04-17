@@ -13,7 +13,7 @@ const Sidebar = () => {
                 <ul className="space-y-4">
                     <li
                         className="flex items-center space-x-3 p-2 rounded-md cursor-pointer hover:bg-gray-200"
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/admin")}
                     >
                         <ClipboardListIcon className="h-6 w-6 text-gray-700" />
                         <span className="font-medium text-gray-800">Orders Placed</span>
@@ -26,7 +26,7 @@ const Sidebar = () => {
                         <span className="font-medium text-gray-800">Manage Products</span>
                     </li>
                     <li
-                        className="flex items-center space-x-3 p-2 rounded-md cursor-pointer hover:bg-gray-200"
+                        className="flex items-center space-x-3 p-2 raounded-md cursor-pointer hover:bg-gray-200"
                         onClick={() => navigate("/analysis")}
                     >
                         <ShoppingCartIcon className="h-6 w-6 text-gray-700" />
