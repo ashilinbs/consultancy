@@ -1,26 +1,38 @@
 import React from "react";
 import Navbar from "./Navbar";
 import { Carousel } from "react-responsive-carousel";
+import { motion } from "framer-motion";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-gradient-to-br from-blue-50 to-white min-h-screen">
       <Navbar />
-      <header className="bg-blue-800 text-white text-center py-6 shadow-md">
-        <h1 className="text-4xl font-extrabold tracking-wide uppercase">Christal Supermarket</h1>
-        <p className="text-lg mt-2 font-medium">Your one-stop destination for quality and value</p>
-      </header>
 
-      {/* Carousel Section */}
-      <div className="mt-6 max-w-4xl mx-auto">
-        <Carousel 
-          autoPlay 
-          infiniteLoop 
-          showThumbs={false} 
-          showStatus={false} 
-          interval={3000}
-          className="rounded-2xl shadow-lg"
+      {/* Header */}
+      <motion.header
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="bg-blue-800 text-white text-center py-8 shadow-xl rounded-b-3xl"
+      >
+        <h1 className="text-5xl font-extrabold tracking-wider uppercase">Christal Supermarket</h1>
+        <p className="text-lg mt-3 font-medium text-blue-100">Your one-stop destination for quality and value</p>
+      </motion.header>
+
+      {/* Carousel */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3, duration: 0.7 }}
+        className="mt-10 max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl"
+      >
+        <Carousel
+          autoPlay
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          interval={3500}
         >
           <div>
             <img src="https://th.bing.com/th/id/R.ebfad280d02ac338ac67866dc6efbad6?rik=XH7%2fFsFtkWjvwQ&riu=http%3a%2f%2fshivangtrading.com%2fimg%2ffood_provision.jpg&ehk=yN5rGwPg%2fMHJOs1vyGzbH5qQlhh8syIQFX1PIPMKn%2fk%3d&risl=&pid=ImgRaw&r=0" alt="Supermarket 1" />
@@ -28,43 +40,65 @@ const Home = () => {
           <div>
             <img src="https://th.bing.com/th/id/R.595c025b9602ede4f88d804b4701e107?rik=x7GCVsUwLGiBkA&riu=http%3a%2f%2fbristolfoodpantry.org%2fimages%2fimages_1.jpg&ehk=bIM6P%2baCfoKhbYZUdATPijn1WZpuWcx2wwnwKE8vVfE%3d&risl=&pid=ImgRaw&r=0" alt="Grocery" />
           </div>
-          <div>
-            <img src="https://th.bing.com/th/id/R.595c025b9602ede4f88d804b4701e107?rik=x7GCVsUwLGiBkA&riu=http%3a%2f%2fbristolfoodpantry.org%2fimages%2fimages_1.jpg&ehk=bIM6P%2baCfoKhbYZUdATPijn1WZpuWcx2wwnwKE8vVfE%3d&risl=&pid=ImgRaw&r=0" alt="Clothing" />
-          </div>
-          <div>
-            <img src="https://th.bing.com/th/id/R.595c025b9602ede4f88d804b4701e107?rik=x7GCVsUwLGiBkA&riu=http%3a%2f%2fbristolfoodpantry.org%2fimages%2fimages_1.jpg&ehk=bIM6P%2baCfoKhbYZUdATPijn1WZpuWcx2wwnwKE8vVfE%3d&risl=&pid=ImgRaw&r=0" alt="Electronics" />
-          </div>
         </Carousel>
-      </div>
+      </motion.div>
 
       {/* About Section */}
-      <section className="bg-gray-100 py-10 px-6 text-center">
-        <h2 className="text-3xl font-bold text-blue-700 mb-4">Welcome to Christal Supermarket</h2>
-        <p className="text-gray-700 text-lg max-w-3xl mx-auto">
-          At Christal Supermarket, we pride ourselves on delivering the best quality products 
-          at unbeatable prices. From fresh groceries and trendy fashion to electronics and home essentials —
-          everything you need is under one roof.
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-14 px-8 text-center"
+      >
+        <h2 className="text-4xl font-bold text-blue-700 mb-6">Welcome to Christal Supermarket</h2>
+        <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
+          We pride ourselves on delivering the best quality products at unbeatable prices. From fresh groceries and trendy fashion to electronics and home essentials — everything you need is under one roof.
         </p>
-        <p className="mt-4 text-gray-500">
-          To enjoy a personalized shopping experience, please <span className="text-blue-600 font-bold">Login</span> first.
+        <p className="mt-5 text-gray-500 font-medium">
+          To enjoy a personalized shopping experience, please{" "}
+          <span className="text-blue-600 font-bold">Login</span> first.
         </p>
-      </section>
+      </motion.section>
 
       {/* Features Section */}
-      <section className="py-10 bg-white grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-        <div className="bg-blue-50 p-6 rounded-2xl shadow-md text-center">
-          <h3 className="text-xl font-semibold text-blue-800 mb-2">Wide Product Range</h3>
-          <p className="text-gray-600">Explore a massive collection of groceries, clothing, gadgets, and more.</p>
-        </div>
-        <div className="bg-blue-50 p-6 rounded-2xl shadow-md text-center">
-          <h3 className="text-xl font-semibold text-blue-800 mb-2">Fast Delivery</h3>
-          <p className="text-gray-600">Experience lightning-fast delivery right to your doorstep.</p>
-        </div>
-        <div className="bg-blue-50 p-6 rounded-2xl shadow-md text-center">
-          <h3 className="text-xl font-semibold text-blue-800 mb-2">Quality Guaranteed</h3>
-          <p className="text-gray-600">Only the best products, thoroughly checked and trusted by thousands.</p>
-        </div>
-      </section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
+        }}
+        className="py-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-6"
+      >
+        {[
+          {
+            title: "Wide Product Range",
+            desc: "Explore a massive collection of groceries, clothing, gadgets, and more.",
+          },
+          {
+            title: "Fast Delivery",
+            desc: "Experience lightning-fast delivery right to your doorstep.",
+          },
+          {
+            title: "Quality Guaranteed",
+            desc: "Only the best products, thoroughly checked and trusted by thousands.",
+          },
+        ].map((feature, idx) => (
+          <motion.div
+            key={idx}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            className="bg-white/60 backdrop-blur-lg p-8 rounded-3xl shadow-lg border border-blue-100 text-center"
+          >
+            <h3 className="text-2xl font-semibold text-blue-800 mb-3">{feature.title}</h3>
+            <p className="text-gray-600">{feature.desc}</p>
+          </motion.div>
+        ))}
+      </motion.section>
     </div>
   );
 };

@@ -12,13 +12,13 @@ const Navbar = () => {
     <nav className="bg-blue-600 text-white p-4 flex justify-between">
       <h1 className="text-xl font-bold">My Shop</h1>
       <div className="space-x-4">
-        <button onClick={() => handleNavigation("/")} className="hover:underline">
+        <button onClick={() => handleNavigation("/")} className="relative pb-1 hover:text-black-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-700 hover:after:w-full after:transition-all after:duration-300 ">
           Home
         </button>
-        <button onClick={() => handleNavigation("/about")} className="hover:underline">
+        <button onClick={() => handleNavigation("/about")} className="relative pb-1 hover:text-black-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-700 hover:after:w-full after:transition-all after:duration-300  ">
           About
         </button>
-        <button onClick={() => handleNavigation("/contact")} className="hover:underline">
+        <button onClick={() => handleNavigation("/contact")} className="relative pb-1 hover:text-black-600 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-700 hover:after:w-full after:transition-all after:duration-300  ">
           Contact
         </button>
       </div>

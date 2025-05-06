@@ -33,138 +33,84 @@ const Analysis = () => {
     { name: "Online", value: orders.filter(o => o.payment_method === "Online").length },
   ];
 
-<<<<<<< HEAD
-            {/* Pie Chart */}
-            <div className="mt-6">
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Sales Distribution</h3>
-                <Pie data={pieChartData} />
-            </div>
-            <h1>sdwdsd</h1>
-        </div>
-    );
-=======
-  const dailyData = orders.reduce((acc, curr) => {
-    const date = curr.order_date;
-    acc[date] = (acc[date] || 0) + parseFloat(curr.total_price || 0);
-    return acc;
-  }, {});
-  const lineData = Object.keys(dailyData).map(date => ({
-    date,
-    sales: dailyData[date]
-  }));
-
-  const productData = orders.reduce((acc, curr) => {
-    acc[curr.product_name] = (acc[curr.product_name] || 0) + curr.quantity;
-    return acc;
-  }, {});
-  const productChartData = Object.keys(productData).map(product => ({
-    name: product,
-    quantity: productData[product]
-  }));
-
-  const COLORS = ["#4caf50", "#f44336", "#ff9800", "#2196f3", "#9c27b0", "#00bcd4"];
-
   return (
-    <div style={{ padding: "30px" }}>
-      <button onClick={() => navigate(-1)} style={backButtonStyle}>← Back</button>
-      <h2>🧾 Admin Sales Dashboard</h2>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        Back
+      </button>
 
-      <div style={{ display: "flex", gap: "20px", marginBottom: "30px", flexWrap: "wrap" }}>
-        <div style={cardStyle}>Total Orders<br /><strong>{totalOrders}</strong></div>
-        <div style={cardStyle}>Total Revenue<br /><strong>${totalRevenue.toFixed(2)}</strong></div>
-        <div style={cardStyle}>Delivered<br /><strong>{delivered}</strong></div>
-        <div style={cardStyle}>Pending<br /><strong>{pending}</strong></div>
-        <div style={cardStyle}>Canceled<br /><strong>{canceled}</strong></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="p-4 bg-white rounded shadow text-center">
+          <h3 className="text-lg font-semibold">Total Orders</h3>
+          <p className="text-2xl mt-2">{totalOrders}</p>
+        </div>
+        <div className="p-4 bg-white rounded shadow text-center">
+          <h3 className="text-lg font-semibold">Total Revenue</h3>
+          <p className="text-2xl mt-2">₹{totalRevenue}</p>
+        </div>
+        <div className="p-4 bg-white rounded shadow text-center">
+          <h3 className="text-lg font-semibold">Pending Orders</h3>
+          <p className="text-2xl mt-2">{pending}</p>
+        </div>
+        <div className="p-4 bg-white rounded shadow text-center">
+          <h3 className="text-lg font-semibold">Delivered Orders</h3>
+          <p className="text-2xl mt-2">{delivered}</p>
+        </div>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "40px" }}>
-        {/* Status Bar Chart */}
-        <ChartBox title="Delivery Status">
-          <BarChart data={statusData}>
-            <XAxis dataKey="name" />
-            <YAxis allowDecimals={false} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="value" fill="#4caf50" />
-          </BarChart>
-        </ChartBox>
-
-        {/* Payment Pie Chart */}
-        <ChartBox title="Payment Method">
+      {/* Delivery Status Pie Chart */}
+      <div className="mt-8 bg-white rounded shadow p-6">
+        <h3 className="text-lg font-semibold mb-4 text-gray-700">Sales Distribution</h3>
+        <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Pie data={paymentData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-              {paymentData.map((_, i) => (
-                <Cell key={i} fill={COLORS[i % COLORS.length]} />
+            <Pie
+              data={statusData}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+              label
+            >
+              {statusData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={['#4CAF50', '#FFC107', '#F44336'][index % 3]} />
               ))}
             </Pie>
             <Tooltip />
             <Legend />
           </PieChart>
-        </ChartBox>
-
-        {/* Line Chart - Sales Over Time */}
-        <ChartBox title="Daily Sales Trend">
-          <LineChart data={lineData}>
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Legend />
-            <Line type="monotone" dataKey="sales" stroke="#2196f3" />
-          </LineChart>
-        </ChartBox>
-
-        {/* Bar Chart - Product Wise Sales */}
-        <ChartBox title="Product-wise Quantity Sold">
-          <BarChart data={productChartData}>
-            <XAxis dataKey="name" />
-            <YAxis allowDecimals={false} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="quantity" fill="#9c27b0" />
-          </BarChart>
-        </ChartBox>
+        </ResponsiveContainer>
       </div>
+
+      {/* Payment Method Pie Chart */}
+      <div className="mt-8 bg-white rounded shadow p-6">
+        <h3 className="text-lg font-semibold mb-4 text-gray-700">Payment Methods</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={paymentData}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#82ca9d"
+              dataKey="value"
+              label
+            >
+              {paymentData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={['#03A9F4', '#FF9800'][index % 2]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
     </div>
   );
->>>>>>> 74dcafa901c3ff6bdddce9c40e67f7cf51b1750b
 };
-
-const cardStyle = {
-  flex: "1 1 200px",
-  padding: "20px",
-  background: "#f5f5f5",
-  borderRadius: "10px",
-  textAlign: "center",
-  fontSize: "18px",
-  boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-};
-
-const backButtonStyle = {
-  marginBottom: "20px",
-  padding: "10px 16px",
-  background: "#2196f3",
-  color: "#fff",
-  border: "none",
-  borderRadius: "6px",
-  cursor: "pointer",
-  fontSize: "16px"
-};
-
-const ChartBox = ({ title, children }) => (
-  <div style={{
-    flex: "1 1 45%",
-    minWidth: "400px",
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
-  }}>
-    <h4>{title}</h4>
-    <ResponsiveContainer width="100%" height={300}>
-      {children}
-    </ResponsiveContainer>
-  </div>
-);
 
 export default Analysis;

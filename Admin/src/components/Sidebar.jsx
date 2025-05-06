@@ -1,44 +1,59 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ClipboardListIcon, ShoppingCartIcon } from "@heroicons/react/outline";
+import {
+  ClipboardListIcon,
+  ShoppingCartIcon,
+  ChartBarIcon,
+} from "@heroicons/react/outline";
 import { Outlet } from "react-router-dom";
 
 const Sidebar = () => {
-    const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
-    return (
-        <div className="flex">
-            <div className="w-64 h-screen bg-gray-100 p-4">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Admin Dashboard</h2>
-                <ul className="space-y-4">
-                    <li
-                        className="flex items-center space-x-3 p-2 rounded-md cursor-pointer hover:bg-gray-200"
-                        onClick={() => navigate("/admin")}
-                    >
-                        <ClipboardListIcon className="h-6 w-6 text-gray-700" />
-                        <span className="font-medium text-gray-800">Orders Placed</span>
-                    </li>
-                    <li
-                        className="flex items-center space-x-3 p-2 rounded-md cursor-pointer hover:bg-gray-200"
-                        onClick={() => navigate("/products")}
-                    >
-                        <ShoppingCartIcon className="h-6 w-6 text-gray-700" />
-                        <span className="font-medium text-gray-800">Manage Products</span>
-                    </li>
-                    <li
-                        className="flex items-center space-x-3 p-2 raounded-md cursor-pointer hover:bg-gray-200"
-                        onClick={() => navigate("/analysis")}
-                    >
-                        <ShoppingCartIcon className="h-6 w-6 text-gray-700" />
-                        <span className="font-medium text-gray-800">Analytics</span>
-                    </li>
-                </ul>
-            </div>
-            <div className="w-full">
-                <Outlet />
-            </div>
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className="w-64 bg-white shadow-lg p-6 flex flex-col">
+        <h2 className="text-2xl font-bold text-blue-800 mb-8 tracking-wide">
+          Admin Panel
+        </h2>
+        <nav className="flex flex-col gap-4">
+          <button
+            onClick={() => navigate("/admin")}
+            className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition"
+          >
+            <ClipboardListIcon className="h-6 w-6" />
+            <span className="font-medium">Orders Placed</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/products")}
+            className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition"
+          >
+            <ShoppingCartIcon className="h-6 w-6" />
+            <span className="font-medium">Manage Products</span>
+          </button>
+
+          <button
+            onClick={() => navigate("/analysis")}
+            className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition"
+          >
+            <ChartBarIcon className="h-6 w-6" />
+            <span className="font-medium">Analytics</span>
+          </button>
+        </nav>
+
+        <div className="mt-auto pt-6 border-t">
+          <p className="text-sm text-gray-400">© 2025 Christal Market</p>
         </div>
-    );
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 p-6">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default Sidebar;

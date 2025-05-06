@@ -14,29 +14,29 @@ const ProductList = () => {
   const handleAddToCart = async (product) => {
     const qty = prompt("Enter quantity:");
     const quantity = Number(qty);
-  
+
     if (!qty || isNaN(quantity) || quantity <= 0) {
       alert("Please enter a valid quantity.");
       return;
     }
-  
+
     if (quantity > product.stock) {
       alert(`Only ${product.stock} items in stock.`);
       return;
     }
-  
-    const userEmail = localStorage.getItem("email"); // or use props/state
+
+    const userEmail = localStorage.getItem("email");
     if (!userEmail) {
       alert("Please log in first.");
       return;
     }
-  
+
     const cartItem = {
       email: userEmail,
       product_id: product._id,
       quantity,
     };
-  
+
     try {
       await axios.post("http://localhost:5000/cart", cartItem);
       alert("Product added to cart successfully.");
@@ -45,46 +45,47 @@ const ProductList = () => {
       alert("Failed to add product to cart.");
     }
   };
+
   const handleBuyNow = async (product) => {
     const qty = prompt("Enter quantity:");
     const quantity = Number(qty);
-  
+
     if (!qty || isNaN(quantity) || quantity <= 0) {
       alert("Please enter a valid quantity.");
       return;
     }
-  
+
     if (quantity > product.stock) {
       alert(`Only ${product.stock} items in stock.`);
       return;
     }
-  
+
     const userEmail = localStorage.getItem("email");
     const userPhone = localStorage.getItem("Phone");
     const userName = localStorage.getItem("name");
-  
+
     if (!userEmail) {
       alert("Please log in first.");
       return;
     }
-  
+
     const method = window.prompt(
       "Choose payment method: Type 'cod' for Cash on Delivery or 'razorpay' for Razorpay"
     );
-  
+
     if (!method || !["cod", "razorpay"].includes(method.toLowerCase())) {
       alert("Invalid payment method.");
       return;
     }
-  
+
     const address = prompt("Enter your delivery address:");
     if (!address) {
       alert("Address is required to place the order.");
       return;
     }
-  
+
     const paymentStatus = method.toLowerCase() === "cod" ? "No" : "Yes";
-  
+
     const now = new Date();
     const deliveryTime = new Date(
       now.getFullYear(),
@@ -93,7 +94,7 @@ const ProductList = () => {
       Math.floor(Math.random() * (20 - 9 + 1)) + 9,
       Math.floor(Math.random() * 60)
     );
-  
+
     const orderData = {
       email: userEmail,
       name: userName || "Guest",
@@ -107,9 +108,9 @@ const ProductList = () => {
       payment_method: method.toUpperCase(),
       payment_status: paymentStatus,
       delivery_status: "Pending",
-      address: address // <-- Added address here
+      address: address,
     };
-  
+
     try {
       await axios.post("http://localhost:5000/order", orderData);
       alert("Order placed successfully!");
@@ -118,41 +119,44 @@ const ProductList = () => {
       alert("Failed to place order.");
     }
   };
-  
-  
 
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {products.map((product) => (
-        <div
-          key={product._id}
-          className="border p-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
-        >
-          <img
-            src={product.image_url}
-            alt={product.product_name}
-            className="w-full h-48 object-cover rounded"
-          />
-          <h2 className="font-bold text-lg mt-2">{product.product_name}</h2>
-          <p className="text-gray-600 text-sm mt-1">{product.ingredients_text}</p>
-          
-          <p className="text-md mt-1 text-green-600 font-semibold">Price: ₹{product.price}</p>
+    <div className="container mx-auto px-2 py-4 max-w-6xl h-[500px] overflow-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="bg-white border rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col h-full"
+          >
+            <img
+              src={product.image_url}
+              alt={product.product_name}
+              className="w-full h-48 object-cover rounded-t-xl"
+            />
+            <div className="flex flex-col flex-grow p-4">
+              <h2 className="font-bold text-lg text-gray-800">{product.product_name}</h2>
+              <p className="text-sm text-gray-600 mt-2">{product.ingredients_text}</p>
+              <p className="mt-4 text-md text-green-600 font-semibold">₹{product.price}</p>
+            </div>
 
-          <div className="mt-4 flex justify-between">
-          <button onClick={() => handleBuyNow(product)} className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" >
-                           Buy Now
-</button>
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={() => handleBuyNow(product)}
+                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+              >
+                Buy Now
+              </button>
 
-
-            <button
-              onClick={() => handleAddToCart(product)}
-              className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-            >
-              Add to Cart
-            </button>
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600"
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
