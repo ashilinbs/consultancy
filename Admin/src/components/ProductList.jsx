@@ -121,38 +121,42 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container mx-auto px-2 py-4 max-w-6xl h-[500px] overflow-auto">
+    <div className="container mx-auto px-4 py-6 max-w-6xl h-[500px] overflow-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div
             key={product._id}
-            className="bg-white border rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col h-full"
+            className="bg-white border rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col h-[450px]"
           >
             <img
               src={product.image_url}
               alt={product.product_name}
-              className="w-full h-48 object-cover rounded-t-xl"
+              className="w-full h-44 object-cover rounded-lg"
             />
-            <div className="flex flex-col flex-grow p-4">
-              <h2 className="font-bold text-lg text-gray-800">{product.product_name}</h2>
-              <p className="text-sm text-gray-600 mt-2">{product.ingredients_text}</p>
-              <p className="mt-4 text-md text-green-600 font-semibold">₹{product.price}</p>
-            </div>
-
-            <div className="flex justify-between items-center mt-4">
-              <button
-                onClick={() => handleBuyNow(product)}
-                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-              >
-                Buy Now
-              </button>
-
-              <button
-                onClick={() => handleAddToCart(product)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600"
-              >
-                Add to Cart
-              </button>
+            <div className="flex flex-col flex-grow mt-4">
+              <h2 className="font-bold text-lg text-gray-800">
+                {product.product_name}
+              </h2>
+              <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                {product.ingredients_text}
+              </p>
+              <p className="mt-3 text-md text-green-600 font-semibold">
+                ₹{product.price}
+              </p>
+              <div className="flex justify-between items-center mt-auto pt-4">
+                <button
+                  onClick={() => handleBuyNow(product)}
+                  className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 text-sm"
+                >
+                  Buy Now
+                </button>
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="bg-yellow-500 text-white px-3 py-2 rounded-md hover:bg-yellow-600 text-sm"
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -162,3 +166,4 @@ const ProductList = () => {
 };
 
 export default ProductList;
+  

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import logincon from '../assets/logincon.jpg';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("email", email);
-        localStorage.setItem("name", name);
+        localStorage.setItem("name", res.data.name);
         alert("Login Successful");
 
         if (res.data.role === "admin") {
@@ -38,18 +39,18 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen">
       {/* Left Image Section */}
-      <div className="w-1/2 hidden md:block">
+      <div className="w-2/5 hidden md:block h-full">
         <img
-          src="https://th.bing.com/th/id/OIP.ua_4aP9c3gpniP-KoKVdhAHaEu?w=266&h=180&c=7&r=0&o=5&cb=iwc&dpr=1.3&pid=1.7" // Replace with your preferred image
+          src={logincon}
           alt="Login Illustration"
           className="w-full h-full object-cover"
         />
       </div>
 
       {/* Right Login Section */}
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-100">
+      <div className="w-full md:w-3/5 flex items-center justify-center bg-gray-100">
         <div className="bg-white p-10 rounded-xl shadow-lg w-96">
           <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Welcome Back!</h2>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}

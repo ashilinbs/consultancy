@@ -49,6 +49,7 @@ const Orders = () => {
       fontFamily: 'Arial, sans-serif',
       backgroundColor: '#f0f4f8',
       minHeight: '100vh',
+      animation: 'fadeIn 0.7s ease',
     },
     backButton: {
       marginBottom: '20px',
@@ -63,32 +64,35 @@ const Orders = () => {
     },
     title: {
       textAlign: 'center',
-      fontSize: '28px',
+      fontSize: '32px',
       marginBottom: '30px',
       color: '#2c3e50',
+      animation: 'slideDown 0.7s ease',
     },
     orderList: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
       gap: '25px',
       justifyContent: 'center',
+      animation: 'fadeInUp 0.8s ease',
     },
     orderCard: {
       backgroundColor: '#ffffff',
-      borderRadius: '12px',
-      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+      borderRadius: '14px',
+      boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
       padding: '20px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      transition: 'transform 0.2s ease',
+      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+      cursor: 'default',
     },
     orderImage: {
       width: '100%',
       height: '180px',
       objectFit: 'cover',
       borderRadius: '10px',
-      marginBottom: '10px',
+      marginBottom: '12px',
     },
     orderDetails: {
       flexGrow: 1,
@@ -112,11 +116,39 @@ const Orders = () => {
       marginTop: '15px',
       fontWeight: 'bold',
       transition: '0.3s ease',
-    }
+    },
+    noImage: {
+      textAlign: 'center',
+      height: '180px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#eee',
+      borderRadius: '10px',
+      fontSize: '14px',
+      color: '#777',
+    },
   };
 
   return (
     <div style={styles.container}>
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}
+      </style>
+
       <button
         style={styles.backButton}
         onClick={goBack}
@@ -130,13 +162,22 @@ const Orders = () => {
 
       <div style={styles.orderList}>
         {orders.map(order => (
-          <div key={order._id} style={styles.orderCard}>
+          <div
+            key={order._id}
+            style={styles.orderCard}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.03)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.1)';
+            }}
+          >
             {order.image ? (
               <img src={order.image} alt={order.product_name} style={styles.orderImage} />
             ) : (
-              <div style={{ textAlign: 'center', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', borderRadius: '10px' }}>
-                <p>No Image Available</p>
-              </div>
+              <div style={styles.noImage}>No Image Available</div>
             )}
             <div style={styles.orderDetails}>
               <h3 style={styles.productTitle}>{order.product_name}</h3>

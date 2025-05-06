@@ -3,7 +3,9 @@ import Navbar from "./Navbar";
 import { Carousel } from "react-responsive-carousel";
 import { motion } from "framer-motion";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
+import consultan1 from '../assets/consultan1.jpg'
+import consult3 from '../assets/consult3.webp'
+import conslutimg from '../assets/conslutimg.avif'
 const Home = () => {
   return (
     <div className="bg-gradient-to-br from-blue-50 to-white min-h-screen">
@@ -25,20 +27,23 @@ const Home = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 0.7 }}
-        className="mt-10 max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl"
+        className="mt-10 max-w-3xl mx-auto rounded-3xl overflow-hidden shadow-2xl"
       >
         <Carousel
           autoPlay
           infiniteLoop
           showThumbs={false}
           showStatus={false}
-          interval={3500}
+          interval={1000}
         >
           <div>
-            <img src="https://th.bing.com/th/id/R.ebfad280d02ac338ac67866dc6efbad6?rik=XH7%2fFsFtkWjvwQ&riu=http%3a%2f%2fshivangtrading.com%2fimg%2ffood_provision.jpg&ehk=yN5rGwPg%2fMHJOs1vyGzbH5qQlhh8syIQFX1PIPMKn%2fk%3d&risl=&pid=ImgRaw&r=0" alt="Supermarket 1" />
+            <img src={consultan1} alt="Supermarket 1" className="h-64 object-cover w-full" />
           </div>
           <div>
-            <img src="https://th.bing.com/th/id/R.595c025b9602ede4f88d804b4701e107?rik=x7GCVsUwLGiBkA&riu=http%3a%2f%2fbristolfoodpantry.org%2fimages%2fimages_1.jpg&ehk=bIM6P%2baCfoKhbYZUdATPijn1WZpuWcx2wwnwKE8vVfE%3d&risl=&pid=ImgRaw&r=0" alt="Grocery" />
+            <img src={consult3} alt="Supermarket 2" className="h-64 object-cover w-full" />
+          </div>
+          <div>
+            <img src={conslutimg} alt="Supermarket 2" className="h-64 object-cover w-full" />
           </div>
         </Carousel>
       </motion.div>

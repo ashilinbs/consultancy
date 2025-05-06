@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -112,7 +113,7 @@ const Cart = () => {
       script.onload = async () => {
         try {
           const { data: order } = await axios.post("http://localhost:5000/create-order", {
-            amount: total * 100, // in paisa
+            amount: total * 100,
           });
 
           const options = {
@@ -152,27 +153,46 @@ const Cart = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading cart...</p>;
+  if (loading)
+    return <p className="text-center mt-10 text-lg animate-pulse">🛒 Loading your cart...</p>;
 
   return (
-    <div className="p-6 max-w-5xl mx-auto mt-10 bg-gradient-to-br from-white via-gray-50 to-white shadow-xl rounded-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 max-w-5xl mx-auto mt-10 bg-gradient-to-br from-white via-gray-50 to-white shadow-2xl rounded-2xl"
+    >
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={() => navigate("/customer-dashboard")}
-          className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded text-black"
+          className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg text-black"
         >
-          ← Back to Dashboard
+          ← Back
         </button>
-        <h2 className="text-2xl font-bold text-center text-gray-700 flex-1">🛒 Your Cart</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 flex-1">🛒 Your Cart</h2>
       </div>
 
       {cartItems.length === 0 ? (
-        <p className="text-center text-lg text-gray-600">Your cart is empty</p>
+        <motion.p
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="text-center text-xl text-gray-600"
+        >
+          Your cart is empty
+        </motion.p>
       ) : (
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cartItems.map((item) => (
-              <div key={item._id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
+            {cartItems.map((item, index) => (
+              <motion.div
+                key={item._id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl shadow-lg p-5 hover:shadow-2xl transition duration-300"
+              >
                 <div className="flex flex-col items-center gap-3">
                   <img
                     src={
@@ -187,64 +207,68 @@ const Cart = () => {
                       e.target.onerror = null;
                       e.target.src = "/default-image.png";
                     }}
-                    className="w-28 h-28 object-cover rounded"
+                    className="w-28 h-28 object-cover rounded-lg shadow-md"
                   />
                   <div className="text-center">
                     <h3 className="font-semibold text-lg text-gray-800">{item.product_name}</h3>
                     <p className="text-gray-600">Qty: {item.quantity}</p>
                     <p className="text-gray-600">Price: ₹{item.price}</p>
-                    <p className="text-gray-700 font-medium">
+                    <p className="text-gray-700 font-semibold">
                       Subtotal: ₹{item.total_price.toFixed(2)}
                     </p>
                   </div>
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                      className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
+                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-full"
                     >
                       ➕
                     </button>
                     <button
                       onClick={() => updateQuantity(item._id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
-                      className={`px-2 py-1 rounded text-white ${
-                        item.quantity <= 1 ? "bg-gray-400" : "bg-yellow-500 hover:bg-yellow-600"
+                      className={`px-3 py-1 rounded-full text-white ${
+                        item.quantity <= 1
+                          ? "bg-gray-400"
+                          : "bg-yellow-500 hover:bg-yellow-600"
                       }`}
                     >
                       ➖
                     </button>
                     <button
                       onClick={() => removeItem(item._id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded"
+                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full"
                     >
                       🗑️
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          <div className="mt-8 text-right">
-            <div className="text-xl font-bold text-gray-800">Total: ₹{total.toFixed(2)}</div>
-            <div className="mt-4 flex justify-end gap-4">
+          <div className="mt-10 text-right">
+            <div className="text-2xl font-bold text-gray-800 mb-3">
+              Total: ₹{total.toFixed(2)}
+            </div>
+            <div className="mt-4 flex flex-wrap justify-end gap-4">
               <button
                 onClick={clearCart}
-                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded"
+                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg shadow-md"
               >
-                Clear Cart
+                🗑️ Clear Cart
               </button>
               <button
                 onClick={handleBuyAll}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-md"
               >
-                Buy All
+                💳 Buy All
               </button>
             </div>
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };
 
