@@ -1,81 +1,86 @@
 import React, { useState } from "react";
-import { Link, Outlet, NavLink, useNavigate } from "react-router-dom"; // ✅
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const CustomerDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate(); // ✅
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-
     if (searchTerm.trim() !== "") {
-      navigate(`/search?q=${encodeURIComponent(searchTerm)}`); // ✅
+      navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
     }
   };
 
   return (
-    <div>
-      <nav className="bg-blue-600 text-white p-4 flex flex-wrap justify-between items-center shadow-md sticky top-0 z-50 gap-4">
-        <h1 className="text-xl font-bold">🛒 SuperMarket</h1>
-
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex-grow max-w-md mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-white via-green-50 to-green-100 font-sans">
+      
+      {/* Search Box - Prominent on Top */}
+      <div className="bg-white py-6 shadow-md sticky top-0 z-50 flex flex-col items-center gap-4">
+        <h1 className="text-3xl font-bold text-green-700">🛒 SuperMarket</h1>
+        <form onSubmit={handleSearch} className="w-full max-w-lg">
           <input
             type="text"
-            placeholder="Search products..."
-            className="w-full p-2 rounded-md text-black"
+            placeholder="Search for products..."
+            className="w-full px-4 py-3 rounded-full border border-green-300 shadow focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
+      </div>
 
-        <ul className="flex gap-6">
+      {/* Navigation Bar */}
+      <nav className="bg-green-600 text-white py-4 px-6 flex justify-center shadow-md sticky top-[104px] z-40">
+        <ul className="flex gap-10 text-lg font-medium">
           <li>
             <NavLink
               to="orders"
               className={({ isActive }) =>
-                isActive ? "text-yellow-400 font-bold hover:underline" : "hover:underline"
+                isActive ? "text-yellow-300 font-bold underline" : "hover:text-yellow-300"
               }
             >
-              Orders
+              📦 Orders
             </NavLink>
           </li>
           <li>
             <NavLink
               to="cart"
               className={({ isActive }) =>
-                isActive ? "text-yellow-400 font-bold hover:underline" : "hover:underline"
+                isActive ? "text-yellow-300 font-bold underline" : "hover:text-yellow-300"
               }
             >
-              Cart
+              🛒 Cart
             </NavLink>
           </li>
           <li>
             <NavLink
               to="profile"
               className={({ isActive }) =>
-                isActive ? "text-yellow-400 font-bold hover:underline" : "hover:underline"
+                isActive ? "text-yellow-300 font-bold underline" : "hover:text-yellow-300"
               }
             >
-              Profile
+              👤 Profile
             </NavLink>
           </li>
           <li>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                isActive ? "text-yellow-400 font-bold hover:underline" : "hover:underline"
+                isActive ? "text-yellow-300 font-bold underline" : "hover:text-yellow-300"
               }
             >
-              Dashboard
+              🏠 Dashboard
             </NavLink>
           </li>
         </ul>
       </nav>
 
-      <div className="p-4">
-        <Outlet />
-      </div>
+      {/* Main Content */}
+      <main className="p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-7xl mx-auto">
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 };

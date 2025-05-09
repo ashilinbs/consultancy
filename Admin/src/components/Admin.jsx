@@ -28,12 +28,17 @@ const Admin = () => {
 
   const updateOrderStatus = async (orderId, paymentStatus, deliveryStatus) => {
     try {
+      // Send the update request to the server
       await axios.put(`http://localhost:5000/orders/${orderId}`, {
-        payment_status: paymentStatus,
-        delivery_status: deliveryStatus,
+        payment_status: paymentStatus, // Keep the current payment status
+        delivery_status: deliveryStatus, // Update only the delivery status
       });
+  
+      // Update the local state
       setOrders(orders.map(order =>
-        order._id === orderId ? { ...order, payment_status: paymentStatus, delivery_status: deliveryStatus } : order
+        order._id === orderId
+          ? { ...order, payment_status: paymentStatus, delivery_status: deliveryStatus }
+          : order
       ));
     } catch (error) {
       console.error("Error updating order status:", error);
@@ -95,23 +100,23 @@ const Admin = () => {
                   </td>
                   <td className="py-2 px-4">{order.address || "N/A"}</td> {/* ✅ Address field */}
                   <td className="py-2 px-4 flex space-x-2">
-                    {order.payment_status === "No" && order.delivery_status === "Pending" && (
-                      <button
-                        className="bg-green-500 text-white py-1 px-4 rounded-md"
-                        onClick={() => updateOrderStatus(order._id, "Yes", order.delivery_status)}
-                      >
-                        Mark as Paid
-                      </button>
-                    )}
-                    {order.delivery_status === "Pending" && (
-                      <button
-                        className="bg-blue-500 text-white py-1 px-4 rounded-md"
-                        onClick={() => updateOrderStatus(order._id, order.payment_status, "Delivered")}
-                      >
-                        Mark as Delivered
-                      </button>
-                    )}
-                  </td>
+  {order.payment_status === "No" && (
+    <button
+      className="bg-green-500 text-white py-1 px-4 rounded-md"
+      onClick={() => updateOrderStatus(order._id, "Yes", order.delivery_status)}
+    >
+      Mark as Paid
+    </button>
+  )}
+  {order.delivery_status === "Pending" && (
+    <button
+      className="bg-blue-500 text-white py-1 px-4 rounded-md"
+      onClick={() => updateOrderStatus(order._id, order.payment_status, "Delivered")}
+    >
+      Mark as Delivered
+    </button>
+  )}
+</td>
                 </tr>
               ))}
             </tbody>

@@ -15,6 +15,8 @@ import Cart from "./components/Cart";
 import Profile from "./components/Profile";
 import ProductList from "./components/ProductList";
 import Chatbox from "./components/Chatbox";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -46,6 +48,8 @@ const App = () => {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} /> 
 
         {/* Cart/Profile outside dashboard for fallback or direct access */}
         <Route path="cart" element={<Cart userEmail={userEmail} />} />
